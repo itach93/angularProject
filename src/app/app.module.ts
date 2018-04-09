@@ -10,8 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppareilService } from './services/appareil.service';
 import { AuthComponent } from './auth/auth.component';
 import { AppareilViewComponent } from './appareil-view/appareil-view.component';
-import {Routes} from '@angular/router';
-import { RouterModule } from '@angular/router';
+import {Routes, RouterModule} from '@angular/router';
 import { AuthService } from './services/auth.service';
 import { SingleAppareilComponent } from './single-appareil/single-appareil.component';
 import { FourOhFourComponent } from './four-oh-four/four-oh-four.component';
@@ -49,13 +48,13 @@ const appRoutes: Routes = [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [
     AppareilService,
     AuthService,
     AuthGuardService,
-    HttpClientModule,
     UserService
   ],
   bootstrap: [AppComponent]

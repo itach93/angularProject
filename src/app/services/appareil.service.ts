@@ -1,30 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+// import { HttpModule } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
-import { concat } from 'rxjs/operators/concat';
+import { concat } from 'rxjs/operator/concat';
 
 @Injectable()
 export class AppareilService {
 
   appareilSubject = new Subject<any[]>();
-
-  private appareils = [
-    {
-      id: 1,
-      name: 'Machine à laver',
-      status: 'éteint'
-    },
-    {
-      id:1,
-      name: 'Frigo',
-      status: 'allumé'
-    },
-    {
-      id:3,
-      name: 'Ordinateur',
-      status: 'éteint'
-    }
-  ];
+  private appareils = [];
 
   constructor(private httpClient: HttpClient) { }
 
@@ -80,7 +64,7 @@ export class AppareilService {
 
   saveAppareilToServer(){
     this.httpClient
-    .post('https://http-client-demo-50876.firebaseio.com/appareils.json', this.appareils)
+    .put('https://employeeregister-54bcb.firebaseio.com/appareils.json', this.appareils)
     .subscribe(
       () => {
         console.log('Enregistrement terminé !');
@@ -90,4 +74,19 @@ export class AppareilService {
       }
     )
   }
+
+  getAppareilsFromServer() {
+    this.httpClient
+      .get<any[]>('https://employeeregister-54bcb.firebaseio.com/appareils.json')
+      .subscribe(
+        (response) => {
+          this.appareils = response;
+          this.emitAppareilSubject();
+        },
+        (error) => {
+          console.log('Erreur ! : ' + error);
+        }
+      );
+  }
+
 }
